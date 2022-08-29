@@ -6,5 +6,5 @@ services:
         container_name: go-test
         volumes:
             - ..:/usr/src/plog-ng
-        working_dir: /usr/src/pmongo
-        command: sh test/plog-ng
+        working_dir: /usr/src/plog-ng
+        command: sh test/entrypoint.sh
