@@ -1,0 +1,10 @@
+version: '3.7'
+
+services:
+    go-test:
+        image: golang:1.17
+        container_name: go-test
+        volumes:
+            - ..:/usr/src/plog-ng
+        working_dir: /usr/src/plog-ng
+        command: sh test/entrypoint.sh
