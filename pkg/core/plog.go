@@ -38,6 +38,8 @@ func Warn(msg string) {
 		log.WithFields(getAdditionalFields(pc, file)).Warn(msg)
 		return
 	}
+
+	log.Warn(msg)
 }
 
 func Error(msg string) {
@@ -46,6 +48,8 @@ func Error(msg string) {
 		log.WithFields(getAdditionalFields(pc, file)).Error(msg)
 		return
 	}
+
+	log.Error(msg)
 }
 
 func getAdditionalFields(pc uintptr, file string) log.Fields {
