@@ -1,6 +1,7 @@
 package core
 
 import (
+	"fmt"
 	"runtime"
 	"strings"
 
@@ -13,9 +14,9 @@ func Init() {
 }
 
 func Info(msg string) {
-	pc, file, _, ok := runtime.Caller(1)
+	pc, file, line, ok := runtime.Caller(1)
 	if ok {
-		log.WithFields(getAdditionalFields(pc, file)).Info(msg)
+		log.WithFields(getAdditionalFields(pc, file, line)).Info(msg)
 		return
 	}
 
@@ -23,9 +24,9 @@ func Info(msg string) {
 }
 
 func Debug(msg string) {
-	pc, file, _, ok := runtime.Caller(1)
+	pc, file, line, ok := runtime.Caller(1)
 	if ok {
-		log.WithFields(getAdditionalFields(pc, file)).Debug(msg)
+		log.WithFields(getAdditionalFields(pc, file, line)).Debug(msg)
 		return
 	}
 
@@ -33,9 +34,9 @@ func Debug(msg string) {
 }
 
 func Warn(msg string) {
-	pc, file, _, ok := runtime.Caller(1)
+	pc, file, line, ok := runtime.Caller(1)
 	if ok {
-		log.WithFields(getAdditionalFields(pc, file)).Warn(msg)
+		log.WithFields(getAdditionalFields(pc, file, line)).Warn(msg)
 		return
 	}
 
@@ -43,23 +44,23 @@ func Warn(msg string) {
 }
 
 func Error(msg string) {
-	pc, file, _, ok := runtime.Caller(1)
+	pc, file, line, ok := runtime.Caller(1)
 	if ok {
-		log.WithFields(getAdditionalFields(pc, file)).Error(msg)
+		log.WithFields(getAdditionalFields(pc, file, line)).Error(msg)
 		return
 	}
 
 	log.Error(msg)
 }
 
-func getAdditionalFields(pc uintptr, file string) log.Fields {
+func getAdditionalFields(pc uintptr, file string, line int) log.Fields {
 	details := runtime.FuncForPC(pc)
 	if details != nil {
 		fn := strings.Split(details.Name(), ".")
 		fields := log.Fields{
 			"package":  fn[0],
 			"function": fn[1],
-			"file":     file,
+			"file":     fmt.Sprintf("%s:%d", file, line),
 		}
 		return fields
 	}
