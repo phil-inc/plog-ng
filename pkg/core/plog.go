@@ -23,6 +23,16 @@ func Info(msg string) {
 	log.Info(msg)
 }
 
+func Infof(s string, args ...interface{}) {
+	pc, file, line, ok := runtime.Caller(1)
+	if ok {
+		log.WithFields(getAdditionalFields(pc, file, line)).Infof(s, args...)
+		return
+	}
+
+	log.Infof(s, args...)
+}
+
 func Debug(msg string) {
 	pc, file, line, ok := runtime.Caller(1)
 	if ok {
@@ -31,6 +41,16 @@ func Debug(msg string) {
 	}
 
 	log.Debug(msg)
+}
+
+func Debugf(s string, args ...interface{}) {
+	pc, file, line, ok := runtime.Caller(1)
+	if ok {
+		log.WithFields(getAdditionalFields(pc, file, line)).Debugf(s, args...)
+		return
+	}
+
+	log.Debugf(s, args...)
 }
 
 func Warn(msg string) {
@@ -43,6 +63,16 @@ func Warn(msg string) {
 	log.Warn(msg)
 }
 
+func Warnf(s string, args ...interface{}) {
+	pc, file, line, ok := runtime.Caller(1)
+	if ok {
+		log.WithFields(getAdditionalFields(pc, file, line)).Warnf(s, args...)
+		return
+	}
+
+	log.Warnf(s, args...)
+}
+
 func Error(msg string) {
 	pc, file, line, ok := runtime.Caller(1)
 	if ok {
@@ -51,6 +81,16 @@ func Error(msg string) {
 	}
 
 	log.Error(msg)
+}
+
+func Errorf(s string, args ...interface{}) {
+	pc, file, line, ok := runtime.Caller(1)
+	if ok {
+		log.WithFields(getAdditionalFields(pc, file, line)).Errorf(s, args...)
+		return
+	}
+
+	log.Errorf(s, args...)
 }
 
 func getAdditionalFields(pc uintptr, file string, line int) log.Fields {
