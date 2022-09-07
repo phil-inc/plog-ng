@@ -95,7 +95,7 @@ func (entry *entry) Errorf(s string, args ...interface{}) {
 		entry.WithFields(getAdditionalFields(pc, file, line)).Errorf(s, args...)
 		return
 	}
-	entry.Warnf(s, args...)
+	entry.Errorf(s, args...)
 }
 
 func getAdditionalFields(pc uintptr, file string, line int) log.Fields {
