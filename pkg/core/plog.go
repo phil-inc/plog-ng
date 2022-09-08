@@ -13,17 +13,13 @@ type entry struct {
 	*log.Entry
 }
 
-var Entry *entry
+var e *entry
 
 func Init() {
 	log.SetFormatter(&log.JSONFormatter{})
-	Entry = new(entry)
-	Entry.Entry = log.NewEntry(log.StandardLogger())
+	e = new(entry)
+	e.Entry = log.NewEntry(log.StandardLogger())
 	// log.SetLevel(log.DebugLevel) //Note this must be enabled from the application
-}
-
-func WithFields(fields Fields) *entry {
-	return &entry{log.WithFields((log.Fields)(fields))}
 }
 
 func (entry *entry) Info(s string) {
