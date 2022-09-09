@@ -9,7 +9,7 @@ The package consists of the following methods:
 ### Info
 
 ```go
-func (entry *entry) Info(s string)
+func Info(s string)
 ```
 
 Info logs a message at level Info. It takes string that is to be logged as an input.
@@ -17,7 +17,7 @@ Info logs a message at level Info. It takes string that is to be logged as an in
 ### Infof
 
 ```go
-func (entry *entry) Infof(s string, args ...interface{})
+func Infof(s string, args ...interface{})
 ```
 
 Infof logs a message at level Info. It takes string with format specifier and arguments, and logs the resulting string
@@ -25,7 +25,7 @@ Infof logs a message at level Info. It takes string with format specifier and ar
 ### Debug
 
 ```go
-func (entry *entry) Debug(s string)
+func Debug(s string)
 ```
 
 Debug logs a message at level Debug. It takes string that is to be logged as an input.
@@ -33,7 +33,7 @@ Debug logs a message at level Debug. It takes string that is to be logged as an 
 ### Debugf
 
 ```go
-func (entry *entry) Debugf(s string, args ...interface{})
+func Debugf(s string, args ...interface{})
 ```
 
 Debugf logs a message at level Debug. It takes string with format specifier and arguments, and logs the resulting string
@@ -41,7 +41,7 @@ Debugf logs a message at level Debug. It takes string with format specifier and 
 ### Warn
 
 ```go
-func (entry *entry) Warn(s string)
+func Warn(s string)
 ```
 
 Warn logs a message at level Warn. It takes string that is to be logged as an input.
@@ -49,7 +49,7 @@ Warn logs a message at level Warn. It takes string that is to be logged as an in
 ### Warnf
 
 ```go
-func (entry *entry) Warnf(s string, args ...interface{})
+func Warnf(s string, args ...interface{})
 ```
 
 Warnf logs a message at level Warn. It takes string with format specifier and arguments, and logs the resulting string
@@ -57,7 +57,7 @@ Warnf logs a message at level Warn. It takes string with format specifier and ar
 ### Error
 
 ```go
-func (entry *entry) Error(s string)
+func Error(s string)
 ```
 
 Error logs a message at level Error. It takes string that is to be logged as an input.
@@ -90,7 +90,7 @@ import (
 
 func main() {
     logger.Init() // Logger should always be initialized at the beginning
-    logger.Entry.Errorf("Error: %s", "New error log")
+    logger.Errorf("Error: %s", "New error log")
     logger.WithFields(logger.Fields{"Field": "Additional fields"}).Infof("Info message: %s", "special info message")
 }
 
