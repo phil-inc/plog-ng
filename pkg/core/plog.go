@@ -3,7 +3,6 @@ package core
 import (
 	"fmt"
 	"runtime"
-	"strings"
 
 	log "github.com/sirupsen/logrus"
 )
@@ -97,11 +96,9 @@ func (entry *entry) Errorf(s string, args ...interface{}) {
 func getAdditionalFields(pc uintptr, file string, line int) log.Fields {
 	details := runtime.FuncForPC(pc)
 	if details != nil {
-		fn := strings.Split(details.Name(), ".")
 		fields := log.Fields{
-			"package":  fn[0],
-			"function": fn[1],
-			"file":     fmt.Sprintf("%s:%d", file, line),
+			"caller": details.Name(),
+			"file":   fmt.Sprintf("%s:%d", file, line),
 		}
 		return fields
 	}
