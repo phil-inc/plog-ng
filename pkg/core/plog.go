@@ -17,7 +17,6 @@ var e *entry
 func Init() {
 	log.SetFormatter(&log.JSONFormatter{})
 	e = new(entry)
-	e.Entry = log.NewEntry(log.StandardLogger())
 	// log.SetLevel(log.DebugLevel) //Note this must be enabled from the application
 }
 
