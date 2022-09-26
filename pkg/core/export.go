@@ -7,11 +7,13 @@ import (
 )
 
 func WithFields(fields Fields) *entry {
+	e.Entry = log.NewEntry(log.StandardLogger())
 	e.Entry = e.WithFields((log.Fields)(fields))
 	return e
 }
 
 func Info(s string) {
+	e.Entry = log.NewEntry(log.StandardLogger())
 	pc, file, line, ok := runtime.Caller(1)
 	if ok {
 		e.WithFields(getAdditionalFields(pc, file, line)).Info(s)
@@ -21,15 +23,17 @@ func Info(s string) {
 }
 
 func Infof(s string, args ...interface{}) {
+	e.Entry = log.NewEntry(log.StandardLogger())
 	pc, file, line, ok := runtime.Caller(1)
 	if ok {
-		e.WithFields(getAdditionalFields(pc, file, line)).Infof(s)
+		e.WithFields(getAdditionalFields(pc, file, line)).Infof(s, args...)
 		return
 	}
 	e.Infof(s, args...)
 }
 
 func Debug(s string) {
+	e.Entry = log.NewEntry(log.StandardLogger())
 	pc, file, line, ok := runtime.Caller(1)
 	if ok {
 		e.WithFields(getAdditionalFields(pc, file, line)).Debug(s)
@@ -40,6 +44,7 @@ func Debug(s string) {
 }
 
 func Debugf(s string, args ...interface{}) {
+	e.Entry = log.NewEntry(log.StandardLogger())
 	pc, file, line, ok := runtime.Caller(1)
 	if ok {
 		e.WithFields(getAdditionalFields(pc, file, line)).Debugf(s, args...)
@@ -49,6 +54,7 @@ func Debugf(s string, args ...interface{}) {
 }
 
 func Warn(s string) {
+	e.Entry = log.NewEntry(log.StandardLogger())
 	pc, file, line, ok := runtime.Caller(1)
 	if ok {
 		e.WithFields(getAdditionalFields(pc, file, line)).Warn(s)
@@ -58,6 +64,7 @@ func Warn(s string) {
 }
 
 func Warnf(s string, args ...interface{}) {
+	e.Entry = log.NewEntry(log.StandardLogger())
 	pc, file, line, ok := runtime.Caller(1)
 	if ok {
 		e.WithFields(getAdditionalFields(pc, file, line)).Warnf(s, args...)
@@ -67,6 +74,7 @@ func Warnf(s string, args ...interface{}) {
 }
 
 func Error(s string) {
+	e.Entry = log.NewEntry(log.StandardLogger())
 	pc, file, line, ok := runtime.Caller(1)
 	if ok {
 		e.WithFields(getAdditionalFields(pc, file, line)).Error(s)
@@ -76,6 +84,7 @@ func Error(s string) {
 }
 
 func Errorf(s string, args ...interface{}) {
+	e.Entry = log.NewEntry(log.StandardLogger())
 	pc, file, line, ok := runtime.Caller(1)
 	if ok {
 		e.WithFields(getAdditionalFields(pc, file, line)).Errorf(s, args...)

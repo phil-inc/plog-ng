@@ -3,6 +3,7 @@ package core
 import (
 	"fmt"
 	"runtime"
+	"strings"
 
 	log "github.com/sirupsen/logrus"
 )
@@ -17,7 +18,6 @@ var e *entry
 func Init() {
 	log.SetFormatter(&log.JSONFormatter{})
 	e = new(entry)
-	e.Entry = log.NewEntry(log.StandardLogger())
 	// log.SetLevel(log.DebugLevel) //Note this must be enabled from the application
 }
 
@@ -96,9 +96,11 @@ func (entry *entry) Errorf(s string, args ...interface{}) {
 func getAdditionalFields(pc uintptr, file string, line int) log.Fields {
 	details := runtime.FuncForPC(pc)
 	if details != nil {
+		caller := strings.Split(details.Name(), "/")
+		file := strings.Split(file, "/")
 		fields := log.Fields{
-			"caller": details.Name(),
-			"file":   fmt.Sprintf("%s:%d", file, line),
+			"caller": caller[len(caller)-1],
+			"file":   fmt.Sprintf("%s:%d", file[len(file)-1], line),
 		}
 		return fields
 	}
