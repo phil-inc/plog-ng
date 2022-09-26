@@ -23,7 +23,7 @@ func Info(s string) {
 func Infof(s string, args ...interface{}) {
 	pc, file, line, ok := runtime.Caller(1)
 	if ok {
-		e.WithFields(getAdditionalFields(pc, file, line)).Infof(s)
+		e.WithFields(getAdditionalFields(pc, file, line)).Infof(s, args...)
 		return
 	}
 	e.Infof(s, args...)
