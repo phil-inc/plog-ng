@@ -70,6 +70,22 @@ func (entry *entry) Errorf(s string, args ...interface{})
 
 Errorf logs a message at level Error. It takes string with format specifier and arguments, and logs the resulting string
 
+### Panic
+
+```go
+func Panic(s string)
+```
+
+Panic logs a message at level Panic. It takes string that is to be logged as an input.
+
+### Panicf
+
+```go
+func (entry *entry) Panicf(s string, args ...interface{})
+```
+
+Panicf logs a message at level Panic. It takes string with format specifier and arguments, and logs the resulting string
+
 ## WithFields
 
 ```go

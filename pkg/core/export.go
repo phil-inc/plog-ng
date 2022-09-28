@@ -92,3 +92,23 @@ func Errorf(s string, args ...interface{}) {
 	}
 	e.Errorf(s, args...)
 }
+
+func Panic(s string) {
+	e.Entry = log.NewEntry(log.StandardLogger())
+	pc, file, line, ok := runtime.Caller(1)
+	if ok {
+		e.WithFields(getAdditionalFields(pc, file, line)).Panic(s)
+		return
+	}
+	e.Panic(s)
+}
+
+func Panicf(s string, args ...interface{}) {
+	e.Entry = log.NewEntry(log.StandardLogger())
+	pc, file, line, ok := runtime.Caller(1)
+	if ok {
+		e.WithFields(getAdditionalFields(pc, file, line)).Panicf(s, args...)
+		return
+	}
+	e.Panicf(s, args...)
+}
