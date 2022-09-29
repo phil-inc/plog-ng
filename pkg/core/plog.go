@@ -93,6 +93,24 @@ func (entry *entry) Errorf(s string, args ...interface{}) {
 	entry.Errorf(s, args...)
 }
 
+func (entry *entry) Panic(s string) {
+	pc, file, line, ok := runtime.Caller(1)
+	if ok {
+		entry.WithFields(getAdditionalFields(pc, file, line)).Panic(s)
+		return
+	}
+	entry.Panic(s)
+}
+
+func (entry *entry) Panicf(s string, args ...interface{}) {
+	pc, file, line, ok := runtime.Caller(1)
+	if ok {
+		entry.WithFields(getAdditionalFields(pc, file, line)).Panicf(s, args...)
+		return
+	}
+	entry.Panicf(s, args...)
+}
+
 func getAdditionalFields(pc uintptr, file string, line int) log.Fields {
 	details := runtime.FuncForPC(pc)
 	if details != nil {
