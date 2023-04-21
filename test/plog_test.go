@@ -8,6 +8,7 @@ import (
 
 func TestConnectivity(t *testing.T) {
 	logger.Init()
+	logger.SetLevel(logger.InfoLevel)
 	logger.Info("test message")
 	logger.Debug("test message")
 	logger.Error("test message")
