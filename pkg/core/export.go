@@ -31,6 +31,10 @@ func SetLevel(level log.Level) {
 	log.SetLevel(level)
 }
 
+func GetLevel() log.Level {
+	return log.GetLevel()
+}
+
 func WithFields(fields Fields) *entry {
 	e.Entry = log.NewEntry(log.StandardLogger())
 	e.Entry = e.WithFields((log.Fields)(fields))
