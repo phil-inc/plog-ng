@@ -26,4 +26,5 @@ func TestConnectivity(t *testing.T) {
 	logger.WithFields(logger.Fields{"Message": "Additional test message"}).Warnf("test message %s", "special value")
 	logger.WithFields(logger.Fields{"Message": "Additional test message"}).Error("test message")
 	logger.WithFields(logger.Fields{"Message": "Additional test message"}).Errorf("test message %s", "special value")
+	logger.WithFields(logger.Fields{"Message": "Additional test message"}).WithCallerLevel(0).Errorf("test message %s", "special value")
 }

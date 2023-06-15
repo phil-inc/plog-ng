@@ -11,6 +11,7 @@ import (
 type Fields map[string]interface{}
 type entry struct {
 	*log.Entry
+	level *int
 }
 
 var e *entry
@@ -21,8 +22,13 @@ func Init() {
 	// log.SetLevel(log.DebugLevel) //Note this must be enabled from the application
 }
 
+func (entry *entry) WithCallerLevel(l int) *entry {
+	entry.level = &l
+	return entry
+}
+
 func (entry *entry) Info(s string) {
-	pc, file, line, ok := runtime.Caller(1)
+	pc, file, line, ok := runtime.Caller(getCallerLevel(entry))
 	if ok {
 		entry.WithFields(getAdditionalFields(pc, file, line)).Info(s)
 		return
@@ -31,7 +37,7 @@ func (entry *entry) Info(s string) {
 }
 
 func (entry *entry) Infof(s string, args ...interface{}) {
-	pc, file, line, ok := runtime.Caller(1)
+	pc, file, line, ok := runtime.Caller(getCallerLevel(entry))
 	if ok {
 		entry.WithFields(getAdditionalFields(pc, file, line)).Infof(s, args...)
 		return
@@ -40,7 +46,7 @@ func (entry *entry) Infof(s string, args ...interface{}) {
 }
 
 func (entry *entry) Debug(s string) {
-	pc, file, line, ok := runtime.Caller(1)
+	pc, file, line, ok := runtime.Caller(getCallerLevel(entry))
 	if ok {
 		entry.WithFields(getAdditionalFields(pc, file, line)).Debug(s)
 		return
@@ -49,7 +55,7 @@ func (entry *entry) Debug(s string) {
 }
 
 func (entry *entry) Debugf(s string, args ...interface{}) {
-	pc, file, line, ok := runtime.Caller(1)
+	pc, file, line, ok := runtime.Caller(getCallerLevel(entry))
 	if ok {
 		entry.WithFields(getAdditionalFields(pc, file, line)).Debugf(s, args...)
 		return
@@ -58,7 +64,7 @@ func (entry *entry) Debugf(s string, args ...interface{}) {
 }
 
 func (entry *entry) Warn(s string) {
-	pc, file, line, ok := runtime.Caller(1)
+	pc, file, line, ok := runtime.Caller(getCallerLevel(entry))
 	if ok {
 		entry.WithFields(getAdditionalFields(pc, file, line)).Warn(s)
 		return
@@ -67,7 +73,7 @@ func (entry *entry) Warn(s string) {
 }
 
 func (entry *entry) Warnf(s string, args ...interface{}) {
-	pc, file, line, ok := runtime.Caller(1)
+	pc, file, line, ok := runtime.Caller(getCallerLevel(entry))
 	if ok {
 		entry.WithFields(getAdditionalFields(pc, file, line)).Warnf(s, args...)
 		return
@@ -76,7 +82,7 @@ func (entry *entry) Warnf(s string, args ...interface{}) {
 }
 
 func (entry *entry) Error(s string) {
-	pc, file, line, ok := runtime.Caller(1)
+	pc, file, line, ok := runtime.Caller(getCallerLevel(entry))
 	if ok {
 		entry.WithFields(getAdditionalFields(pc, file, line)).Error(s)
 		return
@@ -85,7 +91,7 @@ func (entry *entry) Error(s string) {
 }
 
 func (entry *entry) Errorf(s string, args ...interface{}) {
-	pc, file, line, ok := runtime.Caller(1)
+	pc, file, line, ok := runtime.Caller(getCallerLevel(entry))
 	if ok {
 		entry.WithFields(getAdditionalFields(pc, file, line)).Errorf(s, args...)
 		return
@@ -94,7 +100,7 @@ func (entry *entry) Errorf(s string, args ...interface{}) {
 }
 
 func (entry *entry) Panic(s string) {
-	pc, file, line, ok := runtime.Caller(1)
+	pc, file, line, ok := runtime.Caller(getCallerLevel(entry))
 	if ok {
 		entry.WithFields(getAdditionalFields(pc, file, line)).Panic(s)
 		return
@@ -103,7 +109,7 @@ func (entry *entry) Panic(s string) {
 }
 
 func (entry *entry) Panicf(s string, args ...interface{}) {
-	pc, file, line, ok := runtime.Caller(1)
+	pc, file, line, ok := runtime.Caller(getCallerLevel(entry))
 	if ok {
 		entry.WithFields(getAdditionalFields(pc, file, line)).Panicf(s, args...)
 		return
@@ -124,4 +130,12 @@ func getAdditionalFields(pc uintptr, file string, line int) log.Fields {
 	}
 
 	return log.Fields{}
+}
+
+func getCallerLevel(e *entry) int {
+	if e.level == nil {
+		return 1
+	}
+
+	return *e.level
 }
