@@ -95,6 +95,14 @@ func WithFields(fields Fields) *entry
 WithFields creates an entry from the standard logger and adds multiple fields to it.
 Note that it doesn't log until you call Info, Debug, Warn or error on the Entry it returns.
 
+## WithCallerLevel
+
+```go
+func WithCallerLevel(level int) *entry
+```
+
+WithCallerLevel changes the number of stack frames to ascend for when providing file and line number information about function invocations.
+
 ### Example Usage
 
 ```go
