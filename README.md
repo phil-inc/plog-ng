@@ -102,6 +102,7 @@ func WithCallerLevel(level int) *entry
 ```
 
 WithCallerLevel changes the number of stack frames to ascend for when providing file and line number information about function invocations.
+
 ### Example Usage
 
 ```go
