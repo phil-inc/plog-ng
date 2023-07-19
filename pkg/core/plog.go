@@ -1,6 +1,7 @@
 package core
 
 import (
+	"context"
 	"fmt"
 	"runtime"
 	"strings"
@@ -24,6 +25,11 @@ func Init() {
 
 func (entry *entry) WithCallerLevel(l int) *entry {
 	entry.level = &l
+	return entry
+}
+
+func (entry *entry) WithContext(ctx context.Context) *entry {
+	entry.Entry = log.WithContext(ctx)
 	return entry
 }
 
