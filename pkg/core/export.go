@@ -35,6 +35,10 @@ func GetLevel() log.Level {
 	return log.GetLevel()
 }
 
+func SetCallerLevel(callerLevel int) {
+	e.level = &callerLevel
+}
+
 func WithFields(fields Fields) *entry {
 	e.Entry = log.NewEntry(log.StandardLogger())
 	e.Entry = e.WithFields((log.Fields)(fields))
@@ -44,7 +48,7 @@ func WithFields(fields Fields) *entry {
 
 func Info(s string) {
 	e.Entry = log.NewEntry(log.StandardLogger())
-	pc, file, line, ok := runtime.Caller(1)
+	pc, file, line, ok := runtime.Caller(getCallerLevel(e))
 	if ok {
 		e.WithFields(getAdditionalFields(pc, file, line)).Info(s)
 		return
@@ -54,7 +58,7 @@ func Info(s string) {
 
 func Infof(s string, args ...interface{}) {
 	e.Entry = log.NewEntry(log.StandardLogger())
-	pc, file, line, ok := runtime.Caller(1)
+	pc, file, line, ok := runtime.Caller(getCallerLevel(e))
 	if ok {
 		e.WithFields(getAdditionalFields(pc, file, line)).Infof(s, args...)
 		return
@@ -64,7 +68,7 @@ func Infof(s string, args ...interface{}) {
 
 func Debug(s string) {
 	e.Entry = log.NewEntry(log.StandardLogger())
-	pc, file, line, ok := runtime.Caller(1)
+	pc, file, line, ok := runtime.Caller(getCallerLevel(e))
 	if ok {
 		e.WithFields(getAdditionalFields(pc, file, line)).Debug(s)
 		return
@@ -75,7 +79,7 @@ func Debug(s string) {
 
 func Debugf(s string, args ...interface{}) {
 	e.Entry = log.NewEntry(log.StandardLogger())
-	pc, file, line, ok := runtime.Caller(1)
+	pc, file, line, ok := runtime.Caller(getCallerLevel(e))
 	if ok {
 		e.WithFields(getAdditionalFields(pc, file, line)).Debugf(s, args...)
 		return
@@ -85,7 +89,7 @@ func Debugf(s string, args ...interface{}) {
 
 func Warn(s string) {
 	e.Entry = log.NewEntry(log.StandardLogger())
-	pc, file, line, ok := runtime.Caller(1)
+	pc, file, line, ok := runtime.Caller(getCallerLevel(e))
 	if ok {
 		e.WithFields(getAdditionalFields(pc, file, line)).Warn(s)
 		return
@@ -95,7 +99,7 @@ func Warn(s string) {
 
 func Warnf(s string, args ...interface{}) {
 	e.Entry = log.NewEntry(log.StandardLogger())
-	pc, file, line, ok := runtime.Caller(1)
+	pc, file, line, ok := runtime.Caller(getCallerLevel(e))
 	if ok {
 		e.WithFields(getAdditionalFields(pc, file, line)).Warnf(s, args...)
 		return
@@ -105,7 +109,7 @@ func Warnf(s string, args ...interface{}) {
 
 func Error(s string) {
 	e.Entry = log.NewEntry(log.StandardLogger())
-	pc, file, line, ok := runtime.Caller(1)
+	pc, file, line, ok := runtime.Caller(getCallerLevel(e))
 	if ok {
 		e.WithFields(getAdditionalFields(pc, file, line)).Error(s)
 		return
@@ -115,7 +119,7 @@ func Error(s string) {
 
 func Errorf(s string, args ...interface{}) {
 	e.Entry = log.NewEntry(log.StandardLogger())
-	pc, file, line, ok := runtime.Caller(1)
+	pc, file, line, ok := runtime.Caller(getCallerLevel(e))
 	if ok {
 		e.WithFields(getAdditionalFields(pc, file, line)).Errorf(s, args...)
 		return
@@ -125,7 +129,7 @@ func Errorf(s string, args ...interface{}) {
 
 func Panic(s string) {
 	e.Entry = log.NewEntry(log.StandardLogger())
-	pc, file, line, ok := runtime.Caller(1)
+	pc, file, line, ok := runtime.Caller(getCallerLevel(e))
 	if ok {
 		e.WithFields(getAdditionalFields(pc, file, line)).Panic(s)
 		return
@@ -134,8 +138,7 @@ func Panic(s string) {
 }
 
 func Panicf(s string, args ...interface{}) {
-	e.Entry = log.NewEntry(log.StandardLogger())
-	pc, file, line, ok := runtime.Caller(1)
+	pc, file, line, ok := runtime.Caller(getCallerLevel(e))
 	if ok {
 		e.WithFields(getAdditionalFields(pc, file, line)).Panicf(s, args...)
 		return
