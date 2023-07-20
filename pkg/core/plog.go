@@ -29,7 +29,7 @@ func (entry *entry) WithCallerLevel(l int) *entry {
 }
 
 func (entry *entry) WithContext(ctx context.Context) *entry {
-	entry.Entry = log.WithContext(ctx)
+	entry.Entry.WithContext(ctx)
 	return entry
 }
 
